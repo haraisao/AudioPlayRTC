@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <seatml>
+   <general name="CtrlGui">
+    <adaptor name="player" type="consumer"
+      interface="AudioPlay::Player|AudioPlay_Player"
+      if_class="AudioPlay.Player"  />
+
+  </general>
+
+  <state name="main_mode">
+
+    <label text="Simple Control Panel for Manipulator" colspan="5" bg_color="blue" />
+
+    <brk />
+    <label text="Filename:" />
+    <input id="textIn" width="30" colspan="4">
+        <message sendto="str_out" input="main_mode:textIn" />
+    </input>
+
+    <brk />
+    <space />
+    <button label="Play">
+      <script>
+         seat.callService("player", "play_file", seat.getEntry("main_mode:textIn"))
+      </script>
+    </button>
+
+    <space />
+    <button label="pause">
+      <script>
+         seat.callService("player", "pause")
+      </script>
+    </button>
+    
+    <button label="stop">
+      <script>
+         seat.callService("player", "stop")
+      </script>
+    </button>
+    <brk />
+    
+    <space />
+    <button label="get_files">
+      <script>
+        res, data=seat.callService("player", "get_files")
+        seat.appendText("main_mode:textOut", "=== File List ==\n")
+        for x in data.data:
+          seat.appendText("main_mode:textOut", " -"+x+"\n")
+      </script>
+    </button>
+    <brk />
+
+
+    <label text="Coming Text:" />
+    <text id="textOut" width="50" height="5" colspan="4" >
+	    INIT String...
+    </text>
+    <brk />
+
+    <button label="Clear">
+      <script>
+        seat.clearText("main_mode:textOut")
+      </script>
+    </button>
+ 
+  </state>
+</seatml>

@@ -1,0 +1,22 @@
+/*
+  AudioPlay
+
+*/
+
+#ifndef AUDIO_PLAY_IDL
+#define AUDIO_PLAY_IDL
+
+#include "BasicDataType.idl"
+
+module AudioPlay {
+
+  interface Player {
+    long play_file(in string fname);
+    long pause();
+    long stop();
+    long get_files(out RTC::TimedStringSeq flist);
+  };
+};
+
+#endif // AUDIO_PLAY_IDL
+
