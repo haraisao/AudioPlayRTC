@@ -61,9 +61,7 @@ class audio_player(object):
     else:
       sep="/"
     pat=self.dirname+sep+"([A-Z,a-z,0-9,_,\ ,-]+)\."+ext
-    print(pat)
     for x in self.files[ext]:
-      print(x)
       mm=re.match(pat,x)
       if mm :
         fname=mm.group(1)
