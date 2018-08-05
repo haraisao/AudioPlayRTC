@@ -17,7 +17,7 @@ from pydub.playback import play
 
 class audio_player(object):
   def __init__(self, dirname='sounds', activate=True):
-    self.snd_ext=["mp3", "wav", "ogg", "flv", "wma", "mp4"]
+    self.snd_ext=["mp3", "wav", "ogg", "flv", "wma", "m4a"]
     self.dirname=dirname
     self.files={}
     self.target=None
@@ -56,8 +56,14 @@ class audio_player(object):
   def get_file(self, ext):
     self.load_sndfiles()
     res=[]
-    pat=self.dirname+os.path.sep+"([A-Z,a-z,0-9,_]+)\."+ext
+    if os.path.sep == '\\':
+      sep='\\\\'
+    else:
+      sep="/"
+    pat=self.dirname+sep+"([A-Z,a-z,0-9,_,\ ,-]+)\."+ext
+    print(pat)
     for x in self.files[ext]:
+      print(x)
       mm=re.match(pat,x)
       if mm :
         fname=mm.group(1)
