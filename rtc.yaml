@@ -23,16 +23,16 @@ configuration :
     __widget__ : text
     description :  Directory for audio_player
   - name : reverse
-    default :  -1
+    default : 0 
     __type__ : int
     __widget__ : radio
-    __constraints__ : (-1,1)
+    __constraints__ : (0,1)
     description :  Reverse flag
   - name : loop
-    default : -1
+    default : 0 
     __type__ : int
     __widget__ : radio
-    __constraints__ : (-1,1)
+    __constraints__ : (0,1)
     description :  Loop flag
   - name : speed_rate
     default : 1.0
@@ -40,12 +40,12 @@ configuration :
     __widget__ : text
     description : Speed rate to play audio
   - name : start_time
-    default : 1
-    __type__ : int
+    default : 0.0
+    __type__ : float
     __widget__ : text
     description : Start time to play audio
   - name : end_time
     default : -1
-    __type__ : int
+    __type__ : float
     __widget__ : text
     description : End time to play audio

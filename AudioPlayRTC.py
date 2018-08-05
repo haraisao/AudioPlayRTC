@@ -77,7 +77,6 @@ class AudioPlayRTC(DataFlowRTC_Base):
   #
   #
   def onExecute(self, ec_id):
-
     return RTC.RTC_OK
   
   #
