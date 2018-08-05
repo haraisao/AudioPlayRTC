@@ -319,13 +319,13 @@ def RtcModuleInit(manager):
   manager.registerFactory(profile, _rtc_class_, OpenRTM_aist.Delete)
   comp = manager.createComponent(_rtc_name_)
 
-def rtc_init(name, klass, rtc_yaml='rtc.yaml'):
+def rtc_init(klass, rtc_yaml='rtc.yaml'):
   global _rtc_spec_dict_, _rtc_spec_, _rtc_class_, _rtc_name_, _rtc_dataports_, _rtc_serviceports_, _rtc_params_
 
   _rtc_spec_dict_=load_rtc_data(fname=rtc_yaml)
   _rtc_spec_=mk_rtc_spec(_rtc_spec_dict_)
   _rtc_class_=klass
-  _rtc_name_=name
+  _rtc_name_=_rtc_spec_dict_['implementation_id']
   _rtc_dataports_=mk_rtc_dict(_rtc_spec_dict_,'dataport')
   _rtc_serviceports_=mk_rtc_dict(_rtc_spec_dict_,'serviceport')
   _rtc_params_=mk_rtc_dict(_rtc_spec_dict_,'configuration')

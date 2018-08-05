@@ -93,7 +93,7 @@ class AudioPlayRTC(DataFlowRTC_Base):
 #
 
 def main():
-  mgr = rtc_init("AudioPlayRTC", AudioPlayRTC, 'rtc.yaml')
+  mgr = rtc_init(AudioPlayRTC)
   mgr.runManager()
 
 if __name__ == "__main__":
