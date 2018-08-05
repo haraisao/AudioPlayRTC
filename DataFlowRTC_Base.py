@@ -182,16 +182,6 @@ class DataFlowRTC_Base(OpenRTM_aist.DataFlowComponentBase):
 #
 #  Funcrions
 #
-def init_params_spec(spec, param):
-  for k1 in param.keys():
-    for k2 in param[k1].keys():
-      e="conf." + k2 + "." + k1
-      v=param[k1][k2]
-      spec.insert(-1, e)
-      spec.insert(-1, v)
-
-#
-#
 def init_params(param):
   res=[]
   for k1 in param.keys():
@@ -282,6 +272,8 @@ def load_rtc_data(fname='rtc.yaml'):
   return data
 
 #########################################
+#
+#
 def mk_rtc_spec(spec_dict):
   keys=["implementation_id", "type_name", "description", "version", "vendor", "category", "activity_type", "max_instance", "language", "lang_type" ]
   
@@ -300,6 +292,9 @@ def mk_rtc_spec(spec_dict):
          res.append(str(p[x]))
   return res
 
+#
+#
+#
 def mk_rtc_dict(spec_dict, key):
   res=OrderedDict()
   try:
@@ -314,11 +309,17 @@ def mk_rtc_dict(spec_dict, key):
   except:
     return {}
 
+#
+#
+#
 def RtcModuleInit(manager):
   profile = OpenRTM_aist.Properties(defaults_str=_rtc_spec_)
   manager.registerFactory(profile, _rtc_class_, OpenRTM_aist.Delete)
   comp = manager.createComponent(_rtc_name_)
 
+#
+#
+#
 def rtc_init(klass, rtc_yaml='rtc.yaml'):
   global _rtc_spec_dict_, _rtc_spec_, _rtc_class_, _rtc_name_, _rtc_dataports_, _rtc_serviceports_, _rtc_params_
 
