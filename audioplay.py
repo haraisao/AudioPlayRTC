@@ -23,11 +23,12 @@ class audio_player(object):
     self.target=None
     self.chunk=4096
     self.pyaudio=None
-    self.wf=None
     self.stream=None
     self.pause_flag=False
+
     self.terminate=False
     self.thread=False
+    self.audio_segment=None
     self._audio_data=None
     self._audio_len_p_s=0
     self._audio_nchannels=2
@@ -87,30 +88,6 @@ class audio_player(object):
 
   #
   #
-  def convert_to_wav(self, name):
-    snd=self.get_audiosegment(name)
-    newname=self.dirname+os.path.sep+'_'.join(name.split('.'))+'.wav'
-    snd.export( newname, format='wav')
-
-  #
-  #
-  def get_wav_name(self, name):
-    ext=name.split('.')[1]
-    if ext == 'wav': return name
-    else: return '_'.join(name.split('.'))+'.wav'
-    
-  #
-  #
-  def open_wav(self, name):
-    fname=self.get_wav_name(name)
-    if not os.path.exists(self.dirname+os.path.sep+fname) :
-      self.convert_to_wav(name)
-
-    wf=wave.open(self.dirname+os.path.sep+fname, 'rb')
-    return wf
-
-  #
-  #
   def activate(self):
     if not self.pyaudio :
       self.pyaudio=pyaudio.PyAudio()
@@ -135,13 +112,14 @@ class audio_player(object):
       return False
 
     if fname in self.get_files():
-      self.wf=self.open_wav(fname)
-      self._audio_nchannels=self.wf.getnchannels()
-      self._audio_samplewidth=self.wf.getsampwidth()
+      self.audio_segment=self.get_audiosegment(fname)
+
+      self._audio_nchannels=self.audio_segment.channels
+      self._audio_samplewidth=self.audio_segment.sample_width
       self._audio_format=fmt=self.pyaudio.get_format_from_width(self._audio_samplewidth)
-      self._audio_framerate=self.wf.getframerate(),
-      self._audio_len_p_s=self._audio_nchannels*self._audio_samplewidth*self._audio_framerate[0]
-      self._audio_data=self.wf.readframes(self.wf.getnframes())
+      self._audio_framerate=self.audio_segment.frame_rate
+      self._audio_len_p_s=self._audio_nchannels*self._audio_samplewidth*self._audio_framerate
+      self._audio_data=self.audio_segment._data
 
       return True
     else:
@@ -158,7 +136,7 @@ class audio_player(object):
 
       self.stream=self.pyaudio.open(format=self._audio_format,
                       channels=self._audio_nchannels,
-                      rate=(int(self._audio_framerate[0]*rate)),
+                      rate=(int(self._audio_framerate*rate)),
                       output=True)
       return
 
@@ -254,14 +232,14 @@ class audio_player(object):
     len_idx=len(data)/self.chunk
     i = 0
     while i < len_idx:
-      if self.terminate : break
+      if self.terminate : return
       if not self.pause_flag :
         ss=i*self.chunk
         sdata=data[ss:ss+self.chunk]
         self.stream.write(sdata)
         i += 1
       else: time.sleep(0.01)
-
+    return
 
 
   def deactivate(self):
