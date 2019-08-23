@@ -19,6 +19,9 @@ Optional:
 ==QuickStart==
 
 1.Run ./idlcomple.sh to comple idl/*.idl
+
 2.Run AudioPlayRTC.py
+
 3.Run CtrlPanel.py (need 'eSEAT')
+
 4.Connect service port and activate RT-components
