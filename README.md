@@ -7,14 +7,14 @@ Overview:
 This component play audio files(mp3, war,egg,flv,wma,mp4) in 'sounds' directory.
 
 Requirements:
--OpenRTM-aist-1.1.2-python
--python-2.7
--PyAudio
--Pydub
--ffmpeg
+- OpenRTM-aist-1.1.2-python
+- python-3.7
+- PyAudio
+- Pydub
+- ffmpeg
 
 Optional:
--eSEAT
+- eSEAT
 
 ==QuickStart==
 

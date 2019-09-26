@@ -4,6 +4,7 @@
 # Copyright(C) 2018 Isao Hara,AIST,JP
 # All rights reserved
 #
+from __future__ import print_function
 import os
 import sys
 import glob
@@ -104,11 +105,11 @@ class audio_player(object):
   #
   def read_audio_file(self, fname):
     if self.pyaudio is None:
-      print "Not activated"
+      print ("Not activated")
       return False
 
     if self.is_playing():
-      print "Other audio playing"
+      print ("Other audio playing")
       return False
 
     if fname in self.get_files():
@@ -155,7 +156,7 @@ class audio_player(object):
       if wait: 
         self.thread.join()
       else:
-        print "Other audio playing"
+        print ("Other audio playing")
         return False
 
     args=(start,end,reverse,rate,loop)

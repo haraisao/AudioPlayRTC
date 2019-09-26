@@ -1,0 +1,7 @@
+
+openhrivoice/3rdparty
+build
+openhrivoice.egg-info
+*.pyc
+rtm
+sounds
